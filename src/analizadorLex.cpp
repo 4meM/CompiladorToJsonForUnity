@@ -79,6 +79,14 @@ vector<Token> AnalizadorLex::analizar() {
             avanzar();
         }
     }
+    this -> pos = 0;
 
     return tokens;
+}
+
+void AnalizadorLex::imprimirTokens(){
+    vector<Token> forPrint = analizar();
+    for(int i = 0; i < forPrint.size(); i++){
+        cout << forPrint[i].tipo << " " << forPrint[i].valor << "\n";
+    }
 }

@@ -3,6 +3,7 @@ set(SOURCES
         analizadorLex.cpp
         analizadorSint.cpp
         arbolSint.cpp
+        compilador.cpp
 )
 
 set(HEADERS include)

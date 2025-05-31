@@ -12,6 +12,13 @@ void Nodo::agregarHijo(Nodo* hijo) {
     hijos.push_back(hijo);
 }
 
+Nodo::~Nodo() {
+    for (Nodo* hijo : hijos) {
+        delete hijo;
+    }
+    hijos.clear();
+}
+
 ArbolSintactico::ArbolSintactico() {
     raiz = nullptr;
 }

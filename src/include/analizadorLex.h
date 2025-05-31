@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <iostream>
 #include "token.h"
 using namespace std;
 
@@ -13,6 +14,7 @@ class AnalizadorLex {
 public:
     AnalizadorLex(string texto);
     vector<Token> analizar();
+    void imprimirTokens();
 
 private:
     map<string, string> palabrasReservadas = {

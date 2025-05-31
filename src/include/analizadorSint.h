@@ -3,9 +3,9 @@
 
 #include <string>
 #include <vector>
-#include <map>
 #include "token.h"
 #include "arbolSint.h"
+#include <iostream>
 using namespace std;
 
 class AnalizadorSint {
@@ -16,20 +16,21 @@ private:
     void avanzar();
     bool coincidir(string tipo);
     
-    bool instrucciones();
-    bool bloque();
-    bool decir();
-    bool expresion();
-    bool expresionLiteral();
-    bool expresionBooleana();
-    bool expresionLlamada();
-    bool condicionSi();
-    bool npc();
+    Nodo* instrucciones();
+    Nodo* bloque();
+    Nodo* decir();
+    Nodo* expresion();
+    Nodo* expresionLiteral();
+    Nodo* expresionBooleana();
+    Nodo* expresionLlamada();
+    Nodo* condicionSi();
+    Nodo* npc();
 
 public:
     AnalizadorSint(vector<Token> tokens);
-
+    void imprimirArbol(Nodo* nodo);
     Nodo* analizar();
+    void imprimirArbol(Nodo *nodo, int nivel);
 };
 
 #endif

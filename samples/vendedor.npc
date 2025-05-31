@@ -1,8 +1,7 @@
 NPC vendedor {
     decir: "Hola, viajero";
-    si jugador.tiene("oro") {
+    si (jugador.tiene("oro")) {
         decir: "Tengo justo lo que buscas";
-        vender("espada");
     } sino {
         decir: "Vuelve cuando tengas algo de valor";
     }

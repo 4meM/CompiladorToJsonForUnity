@@ -15,6 +15,7 @@ public:
 
     Nodo(string etiqueta, string tipoToken = "", string valor = "");
     void agregarHijo(Nodo* hijo);
+    ~Nodo();
 };
 
 class ArbolSintactico {
@@ -25,6 +26,7 @@ public:
     ArbolSintactico();
     void setNodoRaiz(Nodo* nodo);
     void imprimir();
+    ~ArbolSintactico(){ delete raiz; }
 };
 #endif
 
