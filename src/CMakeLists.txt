@@ -1,9 +1,10 @@
 set(SOURCES
         main.cpp
-        analizadorLex.cpp
-        analizadorSint.cpp
-        arbolSint.cpp
+        analizadores/analizadorLex.cpp
+        analizadores/analizadorSint.cpp
+        analizadores/analizadorSem.cpp
         compilador.cpp
+        generadorJson.cpp
 )
 
 set(HEADERS include)

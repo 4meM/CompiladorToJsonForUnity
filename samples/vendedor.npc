@@ -5,4 +5,17 @@ NPC vendedor {
     } sino {
         decir: "Vuelve cuando tengas algo de valor";
     }
+    si(jugador.tiene("espada")){
+        decir: "Que bonita espada, quieres venderla?";
+    }
+}
+
+NPC campesino {
+    decir: "Saludos jugador";
+    si(jugador.tiene("espada")){
+        decir: "Yo tambien use una en el pasado";
+    }
+    sino{
+        decir: "Que te trae por aqui";
+    }
 }

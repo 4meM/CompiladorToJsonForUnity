@@ -1,21 +1,14 @@
 #ifndef COMPILADOR_H
 #define COMPILADOR_H
 
-#include <string>
-#include <vector>
-#include "analizadorLex.h"
-#include "analizadorSint.h"
-#include "token.h"
-
+#include "analizadores/analizadorLex.h"
+#include "analizadores/analizadorSint.h"
+#include "analizadores/analizadorSem.h"
+#include "generdorJson.h"
+// Union de todos los analizadores y generador JSON
 class Compilador {
 public:
-    Compilador(string codigoFuente);
-    bool analizar();
-    vector<Token> getTokens();
-
-private:
-    std::string codigoFuente;
-    std::vector<Token> tokens;
+    void compilar(const string& fuente);
 };
 
 #endif

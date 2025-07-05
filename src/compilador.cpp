@@ -1,26 +1,26 @@
-#include "include/compilador.h"
+#include "compilador.h"
+#include <sstream>
+#include <fstream>
 
-Compilador::Compilador(string codigoFuente) {
-    this->codigoFuente = codigoFuente;
-}
-
-bool Compilador::analizar() {
-    AnalizadorLex lexer(codigoFuente);
-    tokens = lexer.analizar();
-    cout << "CODIGO ANALIZADO\n";
-    lexer.imprimirTokens();
-    AnalizadorSint parser(tokens);
-    cout << "IMPRIMIR ARBOL\n";
-    Nodo* arbol = parser.analizar();
-    parser.imprimirArbol(arbol,0);
-    if (arbol == nullptr) {
-        return false;
+void Compilador::compilar(const string& fuente) {
+    ifstream archivo(fuente);
+    if (!archivo) {
+        cerr << "Error: No se pudo abrir el archivo.\n";
+        return;
     }
 
-    delete arbol;
-    return true;
-}
+    stringstream buffer;
+    buffer << archivo.rdbuf();
+    string contenido = buffer.str();
 
-vector<Token> Compilador::getTokens() {
-    return tokens;
+    Lexer lexer(contenido);
+    Parser parser(lexer);
+    AST ast = parser.parsearPrograma();
+
+    AnalizadorSemantico semantico;
+    semantico.analizar(ast);
+
+    GeneradorJson::generar(ast, "npc.json");
+
+    cout << "Compilacion completada correctamente.\n";
 }
