@@ -20,7 +20,7 @@ void Compilador::compilar(const string& fuente) {
     AnalizadorSemantico semantico;
     semantico.analizar(ast);
 
-    GeneradorJson::generar(ast, "npc.json");
+    GeneradorJson::generar(ast, "Plantilla-Unity-NPC/Resources/npc.json");
 
     cout << "Compilacion completada correctamente.\n";
 }
