@@ -36,23 +36,30 @@ NPC Parser::parsearNPC() {
         error("Se esperaba '{'");
     }
     avanzarToken(); // {
-    vector<Accion> acciones = parsearListaAcciones();
+    
+    // Parsear variables del NPC
+    vector<Variable> variables;
+    while (tokenActual.tipo == TOKEN_VAR) {
+        variables.push_back(parsearVariable());
+    }
+    
+    vector<Accion> acciones = parsearListaAcciones(variables);
     if (tokenActual.tipo != TOKEN_RBRACE) {
         error("Se esperaba '}'");
     }
     avanzarToken(); // }
-    return {nombre, acciones};
+    return {nombre, variables, acciones};
 }
 
-vector<Accion> Parser::parsearListaAcciones() {
+vector<Accion> Parser::parsearListaAcciones(const vector<Variable>& variables) {
     vector<Accion> acciones;
     while (tokenActual.tipo == TOKEN_DECIR || tokenActual.tipo == TOKEN_SI) {
-        acciones.push_back(parsearAccion());
+        acciones.push_back(parsearAccion(variables));
     }
     return acciones;
 }
 
-Accion Parser::parsearAccion() {
+Accion Parser::parsearAccion(const vector<Variable>& variables) {
     if (tokenActual.tipo == TOKEN_DECIR) {
         avanzarToken(); // decir
         if (tokenActual.tipo != TOKEN_COLON) {
@@ -62,7 +69,7 @@ Accion Parser::parsearAccion() {
         if (tokenActual.tipo != TOKEN_CADENA) {
             error("Se esperaba cadena");
         }
-        string texto = tokenActual.valor;
+        string texto = tokenActual.valor;  // Mantener texto original con {variables}
         avanzarToken(); // cadena
         if (tokenActual.tipo != TOKEN_SEMICOLON) {
             error("Se esperaba ';'");
@@ -70,14 +77,14 @@ Accion Parser::parsearAccion() {
         avanzarToken(); // ;
         return {"decir", texto};
     } else if (tokenActual.tipo == TOKEN_SI) {
-        return parsearCondicional();
+        return parsearCondicional(variables);
     } else {
         error("Accion invalida");
         return {};
     }
 }
 
-Accion Parser::parsearCondicional() {
+Accion Parser::parsearCondicional(const vector<Variable>& variables) {
     avanzarToken(); // si
     if (tokenActual.tipo != TOKEN_LPAREN) {
         error("Se esperaba '('");
@@ -92,23 +99,23 @@ Accion Parser::parsearCondicional() {
         error("Se esperaba '{'");
     }
     avanzarToken(); // {
-    vector<Accion> accionesSi = parsearListaAcciones();
+    vector<Accion> accionesSi = parsearListaAcciones(variables);
     if (tokenActual.tipo != TOKEN_RBRACE) {
         error("Se esperaba '}'");
     }
     avanzarToken(); // }
-    vector<Accion> accionesSino = parsearSino();
+    vector<Accion> accionesSino = parsearSino(variables);
     return {"si", "", accionesSi, accionesSino, condicion};
 }
 
-vector<Accion> Parser::parsearSino() {
+vector<Accion> Parser::parsearSino(const vector<Variable>& variables) {
     if (tokenActual.tipo == TOKEN_SINO) {
         avanzarToken(); // sino
         if (tokenActual.tipo != TOKEN_LBRACE) {
             error("Se esperaba '{'");
         }
         avanzarToken(); // {
-        vector<Accion> acciones = parsearListaAcciones();
+        vector<Accion> acciones = parsearListaAcciones(variables);
         if (tokenActual.tipo != TOKEN_RBRACE) {
             error("Se esperaba '}'");
         }
@@ -144,5 +151,55 @@ string Parser::parsearCondicion() {
         error("Se esperaba ')'");
     }
     avanzarToken(); // )
+    return texto;
+}
+
+// Manejar variables string
+Variable Parser::parsearVariable() {
+    avanzarToken(); // var
+    
+    if (tokenActual.tipo != TOKEN_STRING) {
+        error("Se esperaba 'string' (solo variables string por ahora)");
+    }
+    avanzarToken(); // string
+    
+    if (tokenActual.tipo != TOKEN_IDENT) {
+        error("Se esperaba nombre de variable");
+    }
+    string nombre = tokenActual.valor;
+    avanzarToken(); // nombre
+    
+    if (tokenActual.tipo != TOKEN_EQUALS) {
+        error("Se esperaba '='");
+    }
+    avanzarToken(); // =
+    
+    if (tokenActual.tipo != TOKEN_CADENA) {
+        error("Se esperaba una cadena de texto para la variable string");
+    }
+    string valor = tokenActual.valor;
+    avanzarToken(); // cadena
+    
+    if (tokenActual.tipo != TOKEN_SEMICOLON) {
+        error("Se esperaba ';'");
+    }
+    avanzarToken(); // ;
+    
+    return {nombre, TIPO_STRING, valor};
+}
+
+string Parser::parsearTextoConVariables(const vector<Variable>& variables) {
+    string texto = tokenActual.valor;
+    
+    // Reemplazar variables en el texto (formato: {nombreVariable})
+    for (const auto& var : variables) {
+        string placeholder = "{" + var.nombre + "}";
+        size_t pos = texto.find(placeholder);
+        while (pos != string::npos) {
+            texto.replace(pos, placeholder.length(), var.valor);
+            pos = texto.find(placeholder, pos + var.valor.length());
+        }
+    }
+    
     return texto;
 }

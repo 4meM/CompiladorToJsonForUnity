@@ -1,6 +1,7 @@
 #include "compilador.h"
 #include <sstream>
 #include <fstream>
+#include <filesystem>
 
 void Compilador::compilar(const string& fuente) {
     ifstream archivo(fuente);
@@ -20,7 +21,22 @@ void Compilador::compilar(const string& fuente) {
     AnalizadorSemantico semantico;
     semantico.analizar(ast);
 
-    GeneradorJson::generar(ast, "Plantilla-Unity-NPC/Resources/npc.json");
+    // Extraer el nombre base del archivo (sin extensión)
+    string nombreBase = extraerNombreBase(fuente);
+    string archivoSalida = "Plantilla-Unity-NPC/Resources/" + nombreBase + ".json";
+
+    GeneradorJson::generar(ast, archivoSalida);
 
     cout << "Compilacion completada correctamente.\n";
+    cout << "Archivo generado: " << archivoSalida << "\n";
+}
+
+string Compilador::extraerNombreBase(const string& ruta) {
+    //Encontrar la ultima barra de la ruta 
+    size_t ultimaBarra = ruta.find_last_of("/\\");
+    string nombreArchivo = (ultimaBarra == string::npos) ? ruta : ruta.substr(ultimaBarra + 1);
+    
+    // Quitar el (.npc)
+    size_t ultimoPunto = nombreArchivo.find_last_of('.');
+    return (ultimoPunto == string::npos) ? nombreArchivo : nombreArchivo.substr(0, ultimoPunto);
 }

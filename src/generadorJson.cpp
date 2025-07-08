@@ -35,6 +35,25 @@ void GeneradorJson::generar(const AST& ast, const string& archivoSalida) {
         const NPC& npc = ast.npcs[i];
         out << "    {\n";
         out << "      \"nombre\": \"" << npc.nombre << "\",\n";
+        
+        // Agregar variables al JSON (formato compatible con Unity)
+        if (!npc.variables.empty()) {
+            out << "      \"variables\": [\n";
+            for (size_t v = 0; v < npc.variables.size(); ++v) {
+                const Variable& var = npc.variables[v];
+                out << "        {\n";
+                out << "          \"nombre\": \"" << var.nombre << "\",\n";
+                out << "          \"variable\": {\n";
+                out << "            \"tipo\": \"string\",\n";  // Por ahora solo string
+                out << "            \"valor\": \"" << var.valor << "\"\n";
+                out << "          }\n";
+                out << "        }";
+                if (v + 1 < npc.variables.size()) out << ",";
+                out << "\n";
+            }
+            out << "      ],\n";
+        }
+        
         out << "      \"acciones\": [\n";
         for (size_t j = 0; j < npc.acciones.size(); ++j) {
             escribirAccion(out, npc.acciones[j], 3);

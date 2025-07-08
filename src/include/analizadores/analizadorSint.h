@@ -19,11 +19,14 @@ private:
     void error(const string& mensaje);
 
     NPC parsearNPC();
-    vector<Accion> parsearListaAcciones();
-    Accion parsearAccion();
-    Accion parsearCondicional();
-    vector<Accion> parsearSino();
+    vector<Accion> parsearListaAcciones(const vector<Variable>& variables);
+    Accion parsearAccion(const vector<Variable>& variables);
+    Accion parsearCondicional(const vector<Variable>& variables);
+    vector<Accion> parsearSino(const vector<Variable>& variables);
     string parsearCondicion();
+    // Metodos para variables string
+    Variable parsearVariable();
+    string parsearTextoConVariables(const vector<Variable>& variables);
 };
 
 #endif

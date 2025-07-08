@@ -9,6 +9,9 @@
 class Compilador {
 public:
     void compilar(const string& fuente);
+
+private:
+    string extraerNombreBase(const string& ruta);
 };
 
 #endif

@@ -1,0 +1,13 @@
+NPC comerciante{
+    var string saludo = "Bienvenido a mi tienda, viajero. Soy un comerciante que ha recorrido muchas tierras en busca de los mejores productos para ofrecerte";
+    var string despedida = "Que tengas un buen viaje y recuerda que siempre seras bienvenido en mi establecimiento. Vuelve pronto";
+    var string oferta_especial = "Hoy tengo una oferta especial para aventureros valientes como tu. Espadas encantadas con descuento del 50 por ciento";
+    var string oferta_especial = "no";
+    decir: "{saludo}";
+    si (jugador.tiene("oro")) {
+        decir: "{oferta_especial}";
+    }
+    sino{
+        decir: "{despedida}";
+    }
+}

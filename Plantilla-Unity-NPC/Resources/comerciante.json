@@ -1,0 +1,59 @@
+{
+  "npcs": [
+    {
+      "nombre": "comerciante",
+      "variables": [
+        {
+          "nombre": "saludo",
+          "variable": {
+            "tipo": "string",
+            "valor": "Bienvenido a mi tienda, viajero. Soy un comerciante que ha recorrido muchas tierras en busca de los mejores productos para ofrecerte"
+          }
+        },
+        {
+          "nombre": "despedida",
+          "variable": {
+            "tipo": "string",
+            "valor": "Que tengas un buen viaje y recuerda que siempre seras bienvenido en mi establecimiento. Vuelve pronto"
+          }
+        },
+        {
+          "nombre": "oferta_especial",
+          "variable": {
+            "tipo": "string",
+            "valor": "Hoy tengo una oferta especial para aventureros valientes como tu. Espadas encantadas con descuento del 50 por ciento"
+          }
+        },
+        {
+          "nombre": "oferta_especial",
+          "variable": {
+            "tipo": "string",
+            "valor": "no"
+          }
+        }
+      ],
+      "acciones": [
+      {
+        "tipo": "decir",
+        "texto": "{saludo}"
+      },
+      {
+        "tipo": "si",
+        "condicion": "oro",
+        "accionesSi": [
+          {
+            "tipo": "decir",
+            "texto": "{oferta_especial}"
+          }
+        ],
+        "accionesSino": [
+          {
+            "tipo": "decir",
+            "texto": "{despedida}"
+          }
+        ]
+      }
+      ]
+    }
+  ]
+}

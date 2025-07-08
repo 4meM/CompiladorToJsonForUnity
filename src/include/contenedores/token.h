@@ -10,6 +10,9 @@ enum TokenType {
     TOKEN_SINO,
     TOKEN_JUGADOR,
     TOKEN_TIENE,
+    TOKEN_VAR,        // Nueva palabra clave para variables
+    TOKEN_STRING,
+    TOKEN_EQUALS,
     TOKEN_IDENT,
     TOKEN_CADENA,
     TOKEN_LBRACE,

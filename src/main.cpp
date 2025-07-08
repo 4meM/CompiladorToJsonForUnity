@@ -2,7 +2,7 @@
 
 int main() {
     Compilador compilador;
-    compilador.compilar("samples/vendedor.npc");
+    compilador.compilar("samples/comerciante.npc");
     return 0;
 }
 

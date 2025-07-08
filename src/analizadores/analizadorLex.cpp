@@ -43,6 +43,9 @@ Token Lexer::reconocerIdentificadorOPalabraClave() {
     if (texto == "sino") return {TOKEN_SINO, texto, linea, columna};
     if (texto == "jugador") return {TOKEN_JUGADOR, texto, linea, columna};
     if (texto == "tiene") return {TOKEN_TIENE, texto, linea, columna};
+    if (texto == "var") return {TOKEN_VAR, texto, linea, columna};
+    // Añadir a futuro mas tipos de variables apartir de esta linea
+    if (texto == "string") return {TOKEN_STRING, texto, linea, columna};
 
     return {TOKEN_IDENT, texto, linea, columna};
 }
@@ -84,6 +87,7 @@ Token Lexer::obtenerSiguienteToken() {
         case '.': avanzar(); return {TOKEN_DOT, ".", linea, columna};
         case ':': avanzar(); return {TOKEN_COLON, ":", linea, columna};
         case ';': avanzar(); return {TOKEN_SEMICOLON, ";", linea, columna};
+        case '=': avanzar(); return {TOKEN_EQUALS, "=", linea, columna};
         default:
             cerr << "Error lexico: simbolo no reconocido '" << c 
                       << "' en linea " << linea << ", columna " << columna << ".\n";

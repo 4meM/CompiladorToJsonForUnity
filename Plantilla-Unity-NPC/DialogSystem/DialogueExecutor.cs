@@ -33,7 +33,8 @@ public class DialogueExecutor : MonoBehaviour
         {
             if (accion.tipo == "decir")
             {
-                Debug.Log(accion.texto);
+                string textoFinal = ReemplazarVariables(accion.texto, npc);
+                Debug.Log(textoFinal);
             }
             else if (accion.tipo == "si")
             {
@@ -43,11 +44,24 @@ public class DialogueExecutor : MonoBehaviour
                 {
                     if (subAccion.tipo == "decir")
                     {
-                        Debug.Log(subAccion.texto);
+                        string textoFinal = ReemplazarVariables(subAccion.texto, npc);
+                        Debug.Log(textoFinal);
                     }
                 }
             }
         }
+    }
+
+    string ReemplazarVariables(string texto, NPC npc)
+    {
+        if (npc.variables == null) return texto;
+        
+        foreach (var varEntry in npc.variables)
+        {
+            string placeholder = "{" + varEntry.nombre + "}";
+            texto = texto.Replace(placeholder, varEntry.variable.valor);
+        }
+        return texto;
     }
 
     bool VerificarCondicion(string condicion)
