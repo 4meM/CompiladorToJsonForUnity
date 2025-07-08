@@ -1,8 +1,0 @@
-NPC prueba_validacion{
-    var string var1 = "Variable uno";
-    var string var2 = "Variable dos";
-    var string var3 = "Variable tres";
-    decir: "{var1}";
-    decir: "{var2}";
-    decir: "{var3}";
-}

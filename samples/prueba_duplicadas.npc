@@ -1,7 +1,0 @@
-NPC prueba_duplicadas{
-    var string mensaje = "Primer mensaje";
-    var string saludo = "Hola aventurero";
-    var string mensaje = "Segundo mensaje";
-    decir: "{saludo}";
-    decir: "{mensaje}";
-}
