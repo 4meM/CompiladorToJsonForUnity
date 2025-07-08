@@ -15,9 +15,14 @@ void AnalizadorSemantico::analizarNPC(const NPC& npc) {
         exit(1);
     }
     
-    // Crear conjunto de variables definidas
+    // Validar variables duplicadas y crear conjunto de variables definidas
     std::set<string> variablesDefinidas;
     for (const auto& variable : npc.variables) {
+        // Verificar si la variable ya existe
+        if (variablesDefinidas.find(variable.nombre) != variablesDefinidas.end()) {
+            cerr << "Error semantico: Variable '" << variable.nombre << "' esta declarada mas de una vez en el NPC '" << npc.nombre << "'.\n";
+            exit(1);
+        }
         variablesDefinidas.insert(variable.nombre);
     }
     
