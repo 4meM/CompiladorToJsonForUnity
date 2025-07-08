@@ -1,6 +1,17 @@
 #include "generdorJson.h"
 #include <fstream>
 
+// Setear tipo de variable
+static string tipoVariableAString(TipoVariable tipo) {
+    switch (tipo) {
+        case TIPO_STRING:
+            return "string";
+        // AÑADIR A FUTURO TIPO_INT, TIPO_BOOL, TIPO_FLOAT
+        default:
+            return "unknown";
+    }
+}
+
 static string indent(int nivel) {
     return string(nivel * 2, ' ');
 }
@@ -44,7 +55,7 @@ void GeneradorJson::generar(const AST& ast, const string& archivoSalida) {
                 out << "        {\n";
                 out << "          \"nombre\": \"" << var.nombre << "\",\n";
                 out << "          \"variable\": {\n";
-                out << "            \"tipo\": \"string\",\n";  // Por ahora solo string
+                out << "            \"tipo\": \"" << tipoVariableAString(var.tipo) << "\",\n"; 
                 out << "            \"valor\": \"" << var.valor << "\"\n";
                 out << "          }\n";
                 out << "        }";
