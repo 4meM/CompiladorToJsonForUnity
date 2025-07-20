@@ -69,7 +69,7 @@ Accion Parser::parsearAccion(const vector<Variable>& variables) {
         if (tokenActual.tipo != TOKEN_CADENA) {
             error("Se esperaba cadena");
         }
-        string texto = tokenActual.valor;  // Mantener texto original con {variables}
+        string texto = tokenActual.valor; 
         avanzarToken(); // cadena
         if (tokenActual.tipo != TOKEN_SEMICOLON) {
             error("Se esperaba ';'");

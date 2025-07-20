@@ -1,0 +1,86 @@
+{
+  "npcs": [
+    {
+      "nombre": "herrero",
+      "variables": [
+        {
+          "nombre": "saludo",
+          "variable": {
+            "tipo": "string",
+            "valor": "Bienvenido a mi forja, aventurero. Soy el herrero mas habilidoso de todo el reino"
+          }
+        },
+        {
+          "nombre": "oferta_mejora",
+          "variable": {
+            "tipo": "string",
+            "valor": "Veo que tienes una espada. Puedo mejorarla por 50 monedas de oro, quedara como nueva"
+          }
+        },
+        {
+          "nombre": "sin_espada",
+          "variable": {
+            "tipo": "string",
+            "valor": "No veo que tengas ninguna espada. Vuelve cuando tengas algo que mejorar"
+          }
+        },
+        {
+          "nombre": "sin_oro_para_mejora",
+          "variable": {
+            "tipo": "string",
+            "valor": "Tu espada necesita mejoras, pero no tienes oro suficiente. Necesitas al menos 50 monedas"
+          }
+        },
+        {
+          "nombre": "despedida",
+          "variable": {
+            "tipo": "string",
+            "valor": "Que la forja te acompañe en tus aventuras. Vuelve cuando necesites mis servicios"
+          }
+        }
+      ],
+      "acciones": [
+        {
+          "tipo": "decir",
+          "texto": "{saludo}"
+        },
+        {
+          "tipo": "si",
+          "condicion": "espada",
+          "accionesSi": [
+            {
+              "tipo": "si",
+              "condicion": "oro",
+              "accionesSi": [
+                {
+                  "tipo": "decir",
+                  "texto": "{oferta_mejora}"
+                }
+              ],
+              "accionesSino": [
+                {
+                  "tipo": "decir",
+                  "texto": "{sin_oro_para_mejora}"
+                }
+              ]
+            },
+            {
+              "tipo": "decir",
+              "texto": "{despedida}"
+            }
+          ],
+          "accionesSino": [
+            {
+              "tipo": "decir",
+              "texto": "{sin_espada}"
+            }
+          ]
+        },
+        {
+          "tipo": "decir",
+          "texto": "{despedida}"
+        }
+      ]
+    }
+  ]
+}

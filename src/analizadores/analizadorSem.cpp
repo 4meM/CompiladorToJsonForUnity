@@ -1,7 +1,6 @@
 #include "analizadores/analizadorSem.h"
 #include <iostream>
 #include <cstdlib>
-#include <regex>
 
 void AnalizadorSemantico::analizar(const AST& ast) {
     for (const auto& npc : ast.npcs) {
@@ -16,7 +15,7 @@ void AnalizadorSemantico::analizarNPC(const NPC& npc) {
     }
     
     // Validar variables duplicadas y crear conjunto de variables definidas
-    std::set<string> variablesDefinidas;
+    set<string> variablesDefinidas;
     for (const auto& variable : npc.variables) {
         // Verificar si la variable ya existe
         if (variablesDefinidas.find(variable.nombre) != variablesDefinidas.end()) {
@@ -50,7 +49,7 @@ void AnalizadorSemantico::analizarAccion(const Accion& accion, const std::set<st
 }
 
 void AnalizadorSemantico::validarVariablesEnTexto(const string& texto, const set<string>& variablesDefinidas) {
-    auto variablesUsadas = extraerVariablesDeTexto(texto);
+    set<string> variablesUsadas = extraerVariablesDeTexto(texto);
     
     for (const auto& variable : variablesUsadas) {
         if (variablesDefinidas.find(variable) == variablesDefinidas.end()) {

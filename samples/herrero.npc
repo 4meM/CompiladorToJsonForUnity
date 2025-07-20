@@ -1,0 +1,21 @@
+NPC herrero{
+    var string saludo = "Bienvenido a mi forja, aventurero. Soy el herrero mas habilidoso de todo el reino";
+    var string oferta_mejora = "Veo que tienes una espada. Puedo mejorarla por 50 monedas de oro, quedara como nueva";
+    var string sin_espada = "No veo que tengas ninguna espada. Vuelve cuando tengas algo que mejorar";
+    var string sin_oro_para_mejora = "Tu espada necesita mejoras, pero no tienes oro suficiente. Necesitas al menos 50 monedas";
+    var string despedida = "Que la forja te acompañe en tus aventuras. Vuelve cuando necesites mis servicios";
+    
+    decir: "{saludo}";
+    si (jugador.tiene("espada")) {
+        si (jugador.tiene("oro")) {
+            decir: "{oferta_mejora}";
+        }
+        sino{
+            decir: "{sin_oro_para_mejora}";
+        }
+    }
+    sino{
+        decir: "{sin_espada}";
+        decir: "{despedida}";
+    }
+}

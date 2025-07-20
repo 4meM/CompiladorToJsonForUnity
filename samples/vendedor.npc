@@ -1,9 +1,0 @@
-NPC vendedor{
-    decir: "Hola, viajero";
-    si (jugador.tiene("oro")) {
-        decir: "que haces por aqui";
-    }
-    sino{
-        decir: "desaparece de mi vista";
-    }
-}
