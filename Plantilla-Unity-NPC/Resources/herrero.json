@@ -40,46 +40,42 @@
         }
       ],
       "acciones": [
-        {
-          "tipo": "decir",
-          "texto": "{saludo}"
-        },
-        {
-          "tipo": "si",
-          "condicion": "espada",
-          "accionesSi": [
-            {
-              "tipo": "si",
-              "condicion": "oro",
-              "accionesSi": [
-                {
-                  "tipo": "decir",
-                  "texto": "{oferta_mejora}"
-                }
-              ],
-              "accionesSino": [
-                {
-                  "tipo": "decir",
-                  "texto": "{sin_oro_para_mejora}"
-                }
-              ]
-            },
-            {
-              "tipo": "decir",
-              "texto": "{despedida}"
-            }
-          ],
-          "accionesSino": [
-            {
-              "tipo": "decir",
-              "texto": "{sin_espada}"
-            }
-          ]
-        },
-        {
-          "tipo": "decir",
-          "texto": "{despedida}"
-        }
+      {
+        "tipo": "decir",
+        "texto": "{saludo}"
+      },
+      {
+        "tipo": "si",
+        "condicion": "espada",
+        "accionesSi": [
+          {
+            "tipo": "si",
+            "condicion": "oro",
+            "accionesSi": [
+              {
+                "tipo": "decir",
+                "texto": "{oferta_mejora}"
+              }
+            ],
+            "accionesSino": [
+              {
+                "tipo": "decir",
+                "texto": "{sin_oro_para_mejora}"
+              }
+            ]
+          }
+        ],
+        "accionesSino": [
+          {
+            "tipo": "decir",
+            "texto": "{sin_espada}"
+          },
+          {
+            "tipo": "decir",
+            "texto": "{despedida}"
+          }
+        ]
+      }
       ]
     }
   ]
