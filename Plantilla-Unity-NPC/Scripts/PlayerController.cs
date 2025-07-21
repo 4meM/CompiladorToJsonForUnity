@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     [Header("Player Attributes")]
     public PlayerInventory inventory;
     
+    [Header("Camera Reference")]
+    public Transform playerCamera; // Referencia a la cámara
+    
     private CharacterController characterController;
     private Vector3 velocity;
     private bool isGrounded;
@@ -27,6 +30,10 @@ public class PlayerController : MonoBehaviour
         // Initialize inventory if not assigned
         if (inventory == null)
             inventory = GetComponent<PlayerInventory>();
+            
+        // Find camera if not assigned
+        if (playerCamera == null)
+            playerCamera = Camera.main.transform;
     }
     
     void Update()
@@ -49,17 +56,24 @@ public class PlayerController : MonoBehaviour
         float horizontal = Input.GetAxis("Horizontal");
         float vertical = Input.GetAxis("Vertical");
         
-        // Calculate movement direction
-        Vector3 direction = new Vector3(horizontal, 0f, vertical).normalized;
+        // Get camera's forward and right vectors, but flatten them (no Y component)
+        Vector3 forward = playerCamera.forward;
+        Vector3 right = playerCamera.right;
+        
+        // Remove Y component to keep movement on ground level
+        forward.y = 0f;
+        right.y = 0f;
+        
+        // Normalize to ensure consistent speed
+        forward.Normalize();
+        right.Normalize();
+        
+        // Calculate movement direction based on camera orientation
+        Vector3 direction = (forward * vertical + right * horizontal).normalized;
         
         if (direction.magnitude >= 0.1f)
         {
-            // Rotate player to face movement direction
-            float targetAngle = Mathf.Atan2(direction.x, direction.z) * Mathf.Rad2Deg;
-            float angle = Mathf.MoveTowardsAngle(transform.eulerAngles.y, targetAngle, rotationSpeed * Time.deltaTime);
-            transform.rotation = Quaternion.AngleAxis(angle, Vector3.up);
-            
-            // Move player
+            // Move player in the direction relative to camera view
             characterController.Move(direction * moveSpeed * Time.deltaTime);
         }
         
